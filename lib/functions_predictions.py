@@ -11,7 +11,6 @@ import math
 import socket
 import zoneinfo
 
-import RPi.GPIO as GPIO
 
 # Path importing
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -239,10 +238,6 @@ def sensor_work():
             "dB_limit.txt not found. Please create a file named dB_limit.txt in the same directory and write the dB limit as a single number in it."
         )
 
-    # Configure LEDs
-    GPIO.setmode(GPIO.BCM)  # Set up GPIO mode
-    for pin in led_pins:  # Set up each LED pin as an output
-        GPIO.setup(pin, GPIO.OUT)
 
     # Create folder to save predictions. Check if folder exists, and if not, create it
     if not os.path.exists(saving_path):
@@ -254,14 +249,6 @@ def sensor_work():
         model_CLAP_path, models_predictions_path, pca_path
     )
 
-    # Announce that models are loaded
-    i = 0
-    for i in range(0, 3):
-        turn_leds_on(GPIO, led_pins)  # Turn on LEDs
-        time.sleep(1)  # Keep them on for 1 second
-        turn_leds_off(GPIO, led_pins)  # Turn off LEDs
-        time.sleep(1)  # Keep them off for 1 second
-        i = i + 1
 
     # In loop, perform predictions
     prev_file = ""
@@ -309,7 +296,6 @@ def sensor_work():
                                 (number_files - n_segments) : number_files
                             ]
 
-                    turn_leds_on(GPIO, led_pins)  # Turn on LEDs
                     # time.sleep(0.2)  # FIXME to make sure there is content !!!!!! PUT BACK???
 
                     # Perform prediction
@@ -336,4 +322,3 @@ def sensor_work():
 
         time.sleep(0.2)
         sys.stdout.flush()  # Flush the output buffer to ensure all prints are shown in real-time
-        turn_leds_off(GPIO, led_pins)  # Turn off LEDs
