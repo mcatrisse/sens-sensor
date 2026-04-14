@@ -168,12 +168,16 @@ def sensor_processing(
 
     # Initialize PyAudio
     p = pyaudio.PyAudio()
-    stream = p.open(
-        format=p.get_format_from_width(wf.getsampwidth()),
-        channels=wf.getnchannels(),
-        rate=wf.getframerate(),
-        output=True,
-    )
+    try:
+        stream = p.open(
+            format=p.get_format_from_width(wf.getsampwidth()),
+            channels=wf.getnchannels(),
+            rate=wf.getframerate(),
+            output=True,
+        )
+    except OSError as e:
+        print(f"Warning: Could not open audio stream ({e}). Audio playback will be disabled.")
+        stream = None
 
     # Check sample width
     if sample_width == 1:
@@ -242,7 +246,8 @@ def sensor_processing(
             # audio_samples = np.frombuffer(audio_data, dtype=np.int16)
 
             # Play the audio
-            stream.write(audio_samples)
+            if stream is not None:
+                stream.write(audio_samples)
 
             # Convert audio_samples to a NumPy array
             audio_samples = np.frombuffer(audio_samples, dtype=dtype)
@@ -516,8 +521,9 @@ def sensor_processing(
             print(f"DataFrame saved.")
 
         # Cleanup
-        stream.stop_stream()
-        stream.close()
+        if stream is not None:
+            stream.stop_stream()
+            stream.close()
         p.terminate()
     except KeyboardInterrupt:
         print("Processing interrupted.")
