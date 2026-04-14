@@ -19,10 +19,10 @@ from lib.functions_simulation import sensor_processing
 tzinfo = zoneinfo.ZoneInfo(time.tzname[0])
 
 parser = argparse.ArgumentParser(description="Run SENSEmulator")
-parser.add_argument("--audio_file", type=str, default="example.wav", help="Audio file name (With extension)")
-parser.add_argument("--seconds_segment", type=int, default=3, help="Seconds per audio chunk to analyse")
-parser.add_argument("--n_segments", type=int, default=10, help="Number of segments to integrate")
-parser.print_help()
+parser.add_argument("--audio-file", type=str, default="example.wav", help="Audio file name (With extension)")
+parser.add_argument("--seconds-segment", type=int, default=3, help="Seconds per audio chunk to analyse")
+parser.add_argument("--n-segments", type=int, default=10, help="Number of segments to integrate")
+
 args = parser.parse_args()
 
 sensor_processing(
