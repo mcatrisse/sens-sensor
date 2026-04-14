@@ -27,7 +27,6 @@ from numpy import pi, convolve
 import matplotlib.pyplot as plt
 import pandas as pd
 import json
-from lib.functions_download_data import general_plots
 
 # Path importing
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -511,15 +510,6 @@ def sensor_processing(
                 "box": 14,
                 "percentage": 20,
             }
-
-            general_plots(
-                df=df,
-                saving_path=saving_folder_audio_path,
-                start_str="",
-                end_str="",
-                config=config,
-                fontsizes=fontsizes,
-            )
 
             # Save dataframe with all information
             df.to_csv(os.path.join(saving_folder_audio_path, "data.csv"), index=False)
