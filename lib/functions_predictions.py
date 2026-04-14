@@ -17,7 +17,6 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 src_dir = os.path.abspath(os.path.join(current_dir, "../../"))
 sys.path.append(src_dir)
 
-from CLAP.src.laion_clap import CLAP_Module
 import parameters as pm
 from lib.towers import create_tower
 from lib.functions_leds import turn_leds_on, turn_leds_off
@@ -179,12 +178,7 @@ def initiate(model_CLAP_path, models_predictions_path, pca_path):
     # Load the CLAP model to generate features
     code_starts = time.time()
     print("------- code starts -----------")
-    """ model_CLAP = CLAP_Module(enable_fusion=True)
-    print("CLAP MODULE LINE DONE. Start loading checkpoint")
-    model_CLAP.load_ckpt(model_CLAP_path)
-    print(
-        "#############################################################################"
-    ) """
+
     # manually reseed the random number generator as audio fusion relies on random chunks
     np.random.seed(0)
     model_CLAP, _ = create_tower(model_CLAP_path, enable_fusion=True)

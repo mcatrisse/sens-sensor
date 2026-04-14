@@ -8,16 +8,16 @@ from torch import nn
 import torch.nn.functional as F
 from copy import deepcopy
 
-from CLAP.src.laion_clap.clap_module.htsat import create_htsat_model
-from CLAP.src.laion_clap.clap_module.model import MLPLayers, CLAPAudioCfp
-from CLAP.src.laion_clap.clap_module.pann_model import create_pann_model
-from CLAP.src.laion_clap.training.data import (
+from laion_clap.clap_module.htsat import create_htsat_model
+from laion_clap.clap_module.model import MLPLayers, CLAPAudioCfp
+from laion_clap.clap_module.pann_model import create_pann_model
+from laion_clap.training.data import (
     int16_to_float32,
     float32_to_int16,
     get_audio_features,
 )
-import CLAP.src.laion_clap.clap_module.factory as factory
-from CLAP.src.laion_clap.clap_module import convert_weights_to_fp16
+import laion_clap.clap_module.factory as factory
+from laion_clap.clap_module import convert_weights_to_fp16
 
 
 class AudioTower(nn.Module):
